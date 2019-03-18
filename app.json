@@ -1,0 +1,16 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/calc/calc",
+    "pages/history/history",
+    "pages/fortune/fortune",
+    "pages/repay/repay",
+    "pages/logs/logs"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#000121",
+    "navigationBarTitleText": "何时还款计算器",
+    "navigationBarTextStyle":"white"
+  }
+}

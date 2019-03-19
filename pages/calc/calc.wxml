@@ -1,7 +1,7 @@
 <view class="content">
   <view class="layout-top">
     <view class="screen2">
-     {{screenData}}
+     {{screenData2}}
     </view>
     <view class="screen">
      {{screenData}}
@@ -21,7 +21,6 @@
       <view class="item orange">d</view>
       <view class="item orange" bindtap="clickBtn" id="{{idc}}">С</view>
       <view class="item orange" bindtap="clickBtn" id="{{idb}}">←</view>
-      <!--<view class="item orange" bindtap="clickBtn" id="{{idt}}">＋/－</view>-->
       <view class="item orange iconBtn" bindtap="history">
           <icon type="{{iconType}}" color="{{iconColor}}" class="icon" size="25"/>
       </view>

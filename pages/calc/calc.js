@@ -2,7 +2,6 @@ Page({
   data:{
     idb:"back",
     idc:"clear",
-    idt:"toggle",
     idadd:"＋",
     id9:"9",
     id8:"8",
@@ -20,12 +19,14 @@ Page({
     idd:".",
     ide:"＝",
     screenData:"0",
+    screenData2:"0",
     operaSymbo:{"＋":"+","－":"-","×":"*","÷":"/",".":"."},
     lastIsOperaSymbo:false,
     iconType:'waiting_circle',
     iconColor:'white',
     arr:[],
-    logs:[]
+    logs:[],
+    flage:false
   },
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
@@ -56,6 +57,7 @@ Page({
       this.setData({"screenData":data});
       this.data.arr.pop();
     }else if(id == this.data.idc){  //清屏C
+      this.setData({ "screenData2":"0"});
       this.setData({"screenData":"0"});
       this.data.arr.length = 0;
     }else if(id == this.data.idt){  //正负号+/-
@@ -73,6 +75,7 @@ Page({
       }
       this.setData({"screenData":data});
     }else if(id == this.data.ide){  //等于＝
+      this.setData({"flage":true});
       var data = this.data.screenData;
       if(data == "0"){
           return;
@@ -91,7 +94,7 @@ Page({
       var arr = this.data.arr;
       var optarr = [];
       for(var i in arr){
-        if(isNaN(arr[i]) == false || arr[i] == this.data.idd || arr[i] == this.data.idt){
+        if(isNaN(arr[i]) == false || arr[i] == this.data.idd){
           num += arr[i];
         }else{
           lastOperator = arr[i];
@@ -105,17 +108,18 @@ Page({
       console.log(result);
       for(var i=1; i<optarr.length; i++){
         if(isNaN(optarr[i])){
-            if(optarr[1] == this.data.idadd){
+            if(optarr[i] == this.data.idadd){
                 result += Number(optarr[i + 1]);
-            }else if(optarr[1] == this.data.idj){
+            }else if(optarr[i] == this.data.idj){
                 result -= Number(optarr[i + 1]);
-            }else if(optarr[1] == this.data.idx){
+            }else if(optarr[i] == this.data.idx){
                 result *= Number(optarr[i + 1]);
-            }else if(optarr[1] == this.data.iddiv){
+            }else if(optarr[i] == this.data.iddiv){
                 result /= Number(optarr[i + 1]);
             }
         }
       }
+      
       //存储历史记录
       this.data.logs.push(data + "=" + result);
       wx.setStorageSync("calclogs",this.data.logs);
@@ -123,6 +127,7 @@ Page({
       this.data.arr.length = 0;
       this.data.arr.push(result);
 
+      this.setData({ "screenData2": data });
       this.setData({"screenData":result+""});
     }else{
       if(this.data.operaSymbo[id]){ //如果是符号+-*/
@@ -130,15 +135,23 @@ Page({
           return;
         }
       }
-
       var sd = this.data.screenData;
+      if (this.data.flage && !this.data.operaSymbo[id]) {
+        this.setData({"screenData2":sd})
+        sd = 0;
+        // this.setData({ "flage": false });
+        this.data.arr.length = 0;
+      }
+      this.setData({ "flage": false });
       var data;
+
       if(sd == 0){
         data = id;
       }else{
         data = sd + id;
       }
       this.setData({"screenData":data});
+      
       this.data.arr.push(id);
 
       if(this.data.operaSymbo[id]){

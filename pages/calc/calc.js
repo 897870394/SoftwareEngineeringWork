@@ -1,5 +1,12 @@
 Page({
   data:{
+    idsin:"sinx",
+    idcos:"cosx",
+    idtan:"tanx",
+    idln:"lnx",
+    ida:"x!",
+    idxn:"x^n",
+
     idb:"back",
     idc:"clear",
     idadd:"＋",
@@ -50,6 +57,7 @@ Page({
       if(data == "0"){
           return;
       }
+      
       data = data.substring(0,data.length-1);
       if(data == "" || data == "－"){
           data = 0;
@@ -98,25 +106,47 @@ Page({
           num += arr[i];
         }else{
           lastOperator = arr[i];
-          optarr.push(num);
+          optarr.push(Number(num));
           optarr.push(arr[i]);
           num = "";
         }
       }
       optarr.push(Number(num));
-      var result = Number(optarr[0])*1.0;
-      console.log(result);
-      for(var i=1; i<optarr.length; i++){
-        if(isNaN(optarr[i])){
-            if(optarr[i] == this.data.idadd){
-                result += Number(optarr[i + 1]);
-            }else if(optarr[i] == this.data.idj){
-                result -= Number(optarr[i + 1]);
-            }else if(optarr[i] == this.data.idx){
-                result *= Number(optarr[i + 1]);
-            }else if(optarr[i] == this.data.iddiv){
-                result /= Number(optarr[i + 1]);
-            }
+
+      var stack = [];
+      for(var i = 0; i < optarr.length; i++) {
+        var item = optarr[i];
+        if(isNaN(item)){
+          if (item == this.data.iddiv) {
+            var num1 = stack.pop();
+            var num2 = optarr[i + 1];
+            i++;
+            var res = num1 / num2;
+            stack.push(res);
+          } else if (item == this.data.idx) {
+            var num1 = stack.pop();
+            var num2 = optarr[i+1];
+            i++;
+            var res = num1 * num2;
+            stack.push(res);
+          }else {
+            stack.push(item);
+          }
+        }else {
+          stack.push(item)
+        }
+      }
+   
+      var result = Number(stack[0]);
+      for (var i = 1; i < stack.length; i++){
+        if (isNaN(stack[i])) {
+          if (stack[i] == this.data.idadd) {
+            result += Number(stack[i + 1]);
+           
+          } else if (stack[i] == this.data.idj){
+            result -= Number(stack[i + 1]);
+  
+          }
         }
       }
       

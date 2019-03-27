@@ -26,7 +26,7 @@ Page({
     idd:".",
     ide:"＝",
     screenData:"0",
-    screenData2:"0",
+    screenData2:"\xa0",
     operaSymbo:{"＋":"+","－":"-","×":"*","÷":"/",".":"."},
     lastIsOperaSymbo:false,
     iconType:'waiting_circle',
@@ -65,7 +65,7 @@ Page({
       this.setData({"screenData":data});
       this.data.arr.pop();
     }else if(id == this.data.idc){  //清屏C
-      this.setData({ "screenData2":"0"});
+      this.setData({ "screenData2":"\xa0"});
       this.setData({"screenData":"0"});
       this.data.arr.length = 0;
     }else if(id == this.data.idt){  //正负号+/-
@@ -141,17 +141,17 @@ Page({
       for (var i = 1; i < stack.length; i++){
         if (isNaN(stack[i])) {
           if (stack[i] == this.data.idadd) {
-            result += Number(stack[i + 1]);
+            result = this.add(Number(stack[i + 1]), result);
            
           } else if (stack[i] == this.data.idj){
-            result -= Number(stack[i + 1]);
+            result = this.subtract(result, Number(stack[i + 1]));
   
           }
         }
       }
       
       //存储历史记录
-      this.data.logs.push(data + "=" + result);
+      this.data.logs.push(data + " = " + result);
       wx.setStorageSync("calclogs",this.data.logs);
 
       this.data.arr.length = 0;
@@ -191,9 +191,33 @@ Page({
       }
     }
   },
+
   history:function(){
     wx.navigateTo({
       url:'../history/history'
     })
+  },
+
+  add:function(a,b) {
+    var arr1 = String(a).split(".");
+    var arr2 = String(b).split(".");
+    var len1 = arr1.length == 1 ? 0 : arr1[1].length;
+    var len2 = arr2.length == 1 ? 0 : arr2[1].length;
+    var digit = len1 >= len2 ? len1 : len2;
+    var res = (a * Math.pow(10, digit) + b * Math.pow(10, digit)) / Math.pow(10, digit);
+
+    return res;
+  },
+
+  subtract:function(a,b) {
+    var arr1 = String(a).split(".");
+    var arr2 = String(b).split(".");
+    var len1 = arr1.length == 1 ? 0 : arr1[1].length;
+    var len2 = arr2.length == 1 ? 0 : arr2[1].length;
+    var digit = len1 >= len2 ? len1 : len2;
+    var res = (a * Math.pow(10, digit) - b * Math.pow(10, digit)) / Math.pow(10, digit);
+    console.log(a + "-" + b + " ."  + digit + "= " + res);
+
+    return res;
   }
 })

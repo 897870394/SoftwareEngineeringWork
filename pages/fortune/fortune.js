@@ -5,7 +5,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    nowYear:"",
+    nowMonth:"",
+    nowDay:"",
+    nowDate:"",
+    years:"1997",
+    months:"09",
+    day:"23",
+    birth:"1997:09:23",
+    fortune:100
   },
 
   /**
@@ -19,7 +27,18 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    var timestamp = Date.parse(new Date());
+    var date = new Date(timestamp);
+    var Y = date.getFullYear();
+    var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+    var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate(); 
+    this.setData({
+      nowDay:date.getDate(),
+      nowMonth:date.getMonth()+1,
+      nowYear:date.getFullYear(),
+      nowDate: Y + '-' + M + '-' + D
+    })
+    console.log(this.data.nowMonth)
   },
 
   /**
@@ -62,5 +81,30 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  getDateTime: function (e) {
+    var d = e.detail.value;
+    var arr = d.split("-");
+    this.setData({
+      birth: d,
+      years:arr[0],
+      months:arr[1],
+      day:arr[2]
+    })
+  },
+
+  submit: function (e) {
+    var y1 = Number(this.data.nowYear);
+    var m1 = Number(this.data.nowMonth);
+    var d1 = Number(this.data.nowDay);
+    var y2 = Number(this.data.years);
+    var m2 = Number(this.data.months);
+    var d2 = Number(this.data.day);
+    
+    var res = Math.round(Math.abs(Math.cos(Math.log10(y1/y2) + (m1 - m2) + Math.exp(d1-d2))) * 100);
+    this.setData({
+      fortune:res
+    })
   }
 })

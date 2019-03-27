@@ -10,12 +10,9 @@
 
   <view class="usermotto">
     <!--<text class="user-motto">{{motto}}</text>-->
-    <button type="default" size="{{primarySize}}" plain="{{plain}}" hover-class="button-hover"
-        disabled="{{disabled}}" bindtap="toCalc"> {{motto1}} </button>
-    <button type="default" size="{{primarySize}}" plain="{{plain}}" hover-class="button-hover"
-        disabled="{{disabled}}" bindtap="toFortune"> {{motto2}} </button>
-    <button type="default" size="{{primarySize}}" plain="{{plain}}" hover-class="button-hover"
-        disabled="{{disabled}}" bindtap="toRepay"> {{motto3}} </button>
+    <button type="primary" hover-class="button-hover" bindtap="toCalc"> {{motto1}} </button>
+    <button type="primary" plain="{{plain}}" hover-class="button-hover" bindtap="toFortune"> {{motto2}} </button>
+    <button type="primary" plain="{{plain}}" hover-class="button-hover" bindtap="toRepay"> {{motto3}} </button>
   </view>
 
 </view>

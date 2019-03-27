@@ -54,7 +54,7 @@
       <view class="item blue">%</view>
       <view class="item blue" bindtap="clickBtn" id="{{id0}}">0</view>
       <view class="item blue" bindtap="clickBtn" id="{{idd}}">.</view>
-      <view class="item buttonColor" bindtap="clickBtn" id="{{ide}}">＝</view>
+      <view class="item buttonColor" hover-class='ui-share-hover' hover-stay-time="100" bindtap="clickBtn" id="{{ide}}">＝</view>
     </view>
   </view>
 </view>

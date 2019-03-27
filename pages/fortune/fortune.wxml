@@ -1,2 +1,22 @@
 <!--pages/fortune/fortune.wxml-->
-<text>pages/fortune/fortune.wxml</text>
+<view class='content'>
+
+  <view class='layout-top'>
+    <view>今日运势</view>
+    <view class='screen'>{{fortune}}</view>
+  </view>
+
+  <view class='layout-bottom'>
+    <view>
+      <view>请输入您的生日,查看今日运势：</view>
+      <picker mode="date" fields="day" value="{{date}}" start="1960-01-01" end="{{nowDate}}" bindchange="getDateTime"> 
+        <view  class="selectDate">       
+          {{years}}年{{months}}月{{day}}日
+        </view>
+      </picker>
+
+      <button bindtap='submit'>提交</button>
+    </view>
+  </view>
+
+</view>

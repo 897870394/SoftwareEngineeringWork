@@ -1,0 +1,20 @@
+<view class='content '>
+  <view class="circle-out">
+    <view class="circle-in">
+      <image class="userinfo-avatar" src="/image/touxiang.jpg"></image>
+      
+      <view class="menu-list" catchtouchmove="buttonMove" catchtouchstart="buttonStart" catchtouchend="buttonEnd">
+        <view class="menu-item" wx:for="{{menuList}}" wx:key="unique" animation="{{animationData}}">
+          <view class="menu-circle-item" style="-webkit-transform: rotate({{item.deg}}deg);" data-menu="{{item.menu}}"  bindtap='check' >
+            <image class="image-style" src="{{(item.src)}}"  bindtap='check'></image>
+          </view>
+          <view class="menu-circle-text-item" style="-webkit-transform: rotate({{item.deg}}deg);">
+            <view class="text-style" bindtap="click">****** {{item.menu}} ******</view>
+            <text>===================</text>
+            
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

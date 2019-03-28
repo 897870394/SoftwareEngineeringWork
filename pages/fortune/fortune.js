@@ -1,6 +1,5 @@
 // pages/fortune/fortune.js
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -13,7 +12,8 @@ Page({
     months:"09",
     day:"23",
     birth:"1997:09:23",
-    fortune:100
+    fortune:100,
+    picture:"/image/1.jpg"
   },
 
   /**
@@ -103,8 +103,27 @@ Page({
     var d2 = Number(this.data.day);
     
     var res = Math.round(Math.abs(Math.cos(Math.log10(y1/y2) + (m1 - m2) + Math.exp(d1-d2))) * 100);
+    this.changePic(res);
     this.setData({
       fortune:res
+    })
+  },
+
+  changePic:function(res){
+    var numPic = "";
+    if(res >= 80) {
+      numPic = "/image/2.jpg";
+    }else if(res >= 60 && res < 80) {
+      numPic = "/image/3.jpg";
+    }else if(res >= 40 && res < 60) {
+      numPic = "/image/4.jpg";
+    }else if(res >= 20 && res <40) {
+      numPic = "/image/5.jpg";
+    }else {
+      numPic = "/image/0.jpg";
+    }
+    this.setData({
+      picture:numPic
     })
   }
 })

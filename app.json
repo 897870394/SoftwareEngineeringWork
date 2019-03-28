@@ -1,6 +1,6 @@
 {
   "pages":[
-    "pages/index/index",
+    "pages/index/index2",
     "pages/calc/calc",
     "pages/history/history",
     "pages/fortune/fortune",
@@ -9,8 +9,40 @@
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#000121",
-    "navigationBarTitleText": "何时还款计算器",
-    "navigationBarTextStyle":"white"
+    "navigationBarBackgroundColor": "#F7F7F9",
+    "navigationBarTitleText": "HeShi—计算",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "color": "#7F8389",
+    "selectedColor": "#00C2C2",
+    "borderStyle": "white",
+    "backgroundColor": "#F7F7F9",
+    "list": [
+      {
+        "pagePath": "pages/index/index2",
+        "iconPath": "image/shouye2.png",
+        "selectedIconPath": "image/shouye1.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/calc/calc",
+        "iconPath": "image/jisuan2.png",
+        "selectedIconPath": "image/jisuan1.png",
+        "text": "计算"
+      },
+      {
+        "pagePath": "pages/repay/repay",
+        "iconPath": "image/huankuan2.png",
+        "selectedIconPath": "image/huankuan1.png",
+        "text": "还贷"
+      },
+      {
+        "pagePath": "pages/fortune/fortune",
+        "iconPath": "image/yunshi2.png",
+        "selectedIconPath": "image/yunshi1.png",
+        "text": "运势"
+      }
+    ]
   }
 }

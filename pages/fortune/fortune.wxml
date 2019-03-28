@@ -1,22 +1,37 @@
 <!--pages/fortune/fortune.wxml-->
-<view class='content'>
+<view class="container">
 
-  <view class='layout-top'>
-    <view>今日运势</view>
-    <view class='screen'>{{fortune}}</view>
-  </view>
-
-  <view class='layout-bottom'>
-    <view>
-      <view>请输入您的生日,查看今日运势：</view>
-      <picker mode="date" fields="day" value="{{date}}" start="1960-01-01" end="{{nowDate}}" bindchange="getDateTime"> 
-        <view  class="selectDate">       
-          {{years}}年{{months}}月{{day}}日
-        </view>
-      </picker>
-
-      <button bindtap='submit'>提交</button>
+  <view class="index_banner">
+    <view class="block1"></view>
+    <view class="count_hd">
+      <view class="count_bd  text-center">
+        <text class="fs2">今日运势</text>
+        <text class="num">{{fortune}}</text>
+      </view>
     </view>
   </view>
 
+  <view class="weui-cells">
+    <view class="weui-cell weui-cell_access ">
+      <view class="weui-cell__bd textF">
+        <text>请输入生日,查看今日运势</text>
+      </view>
+      <view class="weui-cell__ft_in-access textF">
+        <picker mode="date" fields="day" value="{{date}}" start="1960-01-01" end="{{nowDate}}" bindchange="getDateTime"> 
+          {{years}}年{{months}}月{{day}}日
+        </picker>
+      </view>
+    </view>
+  </view>
+
+  <view class='image-view'>
+    <image class='image-style image-view' src='{{picture}}'></image>
+  </view>
+
+  <view class='btns'>
+    <view>
+      <button bindtap='submit' class="compute" type="primary" >提交</button>
+    </view>
+  </view>
+  <text class="main_info">此功能仅供娱乐</text>
 </view>

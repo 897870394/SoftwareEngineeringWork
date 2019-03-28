@@ -1,15 +1,19 @@
 Page({
   data:{
-    idsin:"sinx",
-    idcos:"cosx",
-    idtan:"tanx",
-    idln:"lnx",
-    ida:"x!",
-    idxn:"x^n",
-
+    idbfh:"%",
+    idsin:"sin",
+    idcos:"cos",
+    idtan:"tan",
+    idln:"ln",
+    idlg:"log",
+    ida:"!",
+    idxn:"^",
+    idgen:"√",
+    idxs:"^2",
     idb:"back",
     idc:"clear",
     idadd:"＋",
+    id_e:"e",
     id9:"9",
     id8:"8",
     id7:"7",
@@ -27,13 +31,16 @@ Page({
     ide:"＝",
     screenData:"0",
     screenData2:"\xa0",
-    operaSymbo:{"＋":"+","－":"-","×":"*","÷":"/",".":"."},
+    operaSymbo: { "＋": "+", "－": "-", "×": "*", "÷": "/", ".": ".", "!": "!", "^": "^", "^2": "^2"},
+    specialSymbo: { "sin": "sin", "cos": "cos", "tan": "tan", "ln": "ln", "log": "log", "√": "√", "e": "e"},
     lastIsOperaSymbo:false,
     iconType:'waiting_circle',
     iconColor:'white',
     arr:[],
     logs:[],
-    flage:false
+    flage:false,
+    pointFlage:false,
+    bfhFlage:false
   },
   onLoad:function(options){
     // 页面初始化 options为页面跳转所带来的参数
@@ -63,10 +70,21 @@ Page({
           data = 0;
       }
       this.setData({"screenData":data});
-      this.data.arr.pop();
+      var del = this.data.arr.pop();
+      if(this.data.operaSymbo[del]){
+        this.setData({lastIsOperaSymbo:false})
+        if(del == this.data.idd) {
+          this.setData({pointFlage:false})
+        }
+      }
     }else if(id == this.data.idc){  //清屏C
-      this.setData({ "screenData2":"\xa0"});
-      this.setData({"screenData":"0"});
+      this.setData({
+        "screenData2":"\xa0",
+        "screenData": "0",
+        pointFlage:false,
+        lastIsOperaSymbo:false
+      });
+
       this.data.arr.length = 0;
     }else if(id == this.data.idt){  //正负号+/-
       var data = this.data.screenData;
@@ -82,14 +100,14 @@ Page({
         this.data.arr.unshift("－");
       }
       this.setData({"screenData":data});
-    }else if(id == this.data.ide){  //等于＝
+
+    }
+    else if(id == this.data.ide){  //等于＝
       this.setData({"flage":true});
       var data = this.data.screenData;
       if(data == "0"){
-          return;
+        return;
       }
-      //eval是js中window的一个方法，而微信页面的脚本逻辑在是在JsCore中运行，JsCore是一个没有窗口对象的环境，所以不能再脚本中使用window，也无法在脚本中操作组件                 
-      //var result = eval(newData);           
       
       var lastWord = data.charAt(data.length);
       if(isNaN(lastWord)){
@@ -98,36 +116,130 @@ Page({
 
       var num = "";
 
-      var lastOperator = "";
       var arr = this.data.arr;
-      var optarr = [];
+      var original = [];
       for(var i in arr){
-        if(isNaN(arr[i]) == false || arr[i] == this.data.idd){
+        if(isNaN(arr[i]) == false || arr[i] == this.data.idd){  //数字 和 点
           num += arr[i];
+        } else if (arr[i] == "cos" || arr[i] == "sin" || arr[i] == "tan" || arr[i] == "ln" || arr[i] == "log" || arr[i] == "√") {
+          if(num != "") {
+            original.push(Number(num));
+            original.push("x");
+            num = "";
+          }
+          original.push(arr[i]);
+        }else if(arr[i] == "e"){
+          if(num!=""){
+            original.push(Number(num));
+            original.push("x");
+            num = "";
+          }
+          original.push(Math.E);
+        }else if(arr[i] == "%"){
+          if(num!="") {
+            original.push(Number(num));
+            num = "";
+          }
+          original.push("%");
         }else{
-          lastOperator = arr[i];
-          optarr.push(Number(num));
-          optarr.push(arr[i]);
+          original.push(Number(num));
+          original.push(arr[i]);
           num = "";
         }
       }
-      optarr.push(Number(num));
+      if(num != ""){
+        original.push(Number(num));
+      }
 
+      // console.log(original);
+      //先计算三角函数
+      var optarr = [];
+      for(var i = 0; i < original.length; i++) {
+        if(original[i] == "cos") {                          //cos
+          var d = original[i + 1] * Math.PI / 180;
+          var x = Math.cos(d);
+          optarr.push(x.toFixed(3));
+          i++;
+        }else if(original[i] == "sin") {                    //sin
+          var d = original[i + 1] * Math.PI / 180;
+          var x = Math.sin(d);
+          optarr.push(x.toFixed(3));
+          i++;
+        }else if (original[i] == "tan") {                   //tan
+          if((original[i+1] - 90)%180 == 0) {
+            this.setData({
+              screenData:"∞",
+              screenData2: "tan" + original[i + 1]
+            })
+            return;
+          }
+          var d = original[i + 1] * Math.PI / 180;
+          var x = Math.tan(d);
+          optarr.push(x.toFixed(3));
+          i++;
+        }else if(original[i] == "!") {             //阶乘
+          var n = optarr.pop();
+          if(n == 0){
+            optarr.push(1);
+          }else if(n-Math.round(n) != 0){
+            this.setData({screenData:"阶乘需要输入整数"})
+            return;
+          }else {
+            var x = 1;
+            for(var j = n; j > 1; j--){
+              x *= j;
+            }
+            optarr.push(x);
+          }
+        } else if (original[i] == "^"){                    // 幂
+          var a = optarr.pop();
+          optarr.push(Math.pow(a,original[i+1]));
+          i++;
+        } else if (original[i] == "^2") { 
+          var a = optarr.pop();
+          optarr.push(Math.pow(a, 2));
+          i++;
+        }else if(original[i] == "ln"){           
+          var ln = Math.log(original[i+1]);
+          optarr.push(ln.toFixed(5));
+          i++;
+        }else if (original[i] == "log") {
+          var ln = Math.log10(original[i + 1]);
+          optarr.push(ln.toFixed(5));
+          i++;
+        }else if (original[i] == "√"){
+          var gen = Math.sqrt(original[i+1]);
+          optarr.push(gen.toFixed(5));
+          i++;
+        } else if (original[i] == "²") {
+          var ping = Math.pow(optarr.pop(),2);
+          optarr.push(ping.toFixed(5));
+          i++;
+        }else if(original[i] == "%"){
+          var n = optarr.pop() / 100;
+          console.log(optarr.pop() + "   "+n);
+          optarr.push(n);
+        }else{
+          optarr.push(original[i]);
+        }
+      }
+      // console.log(optarr);
+      
       var stack = [];
       for(var i = 0; i < optarr.length; i++) {
         var item = optarr[i];
         if(isNaN(item)){
-          if (item == this.data.iddiv) {
+          if (item == this.data.iddiv) {    //除
             var num1 = stack.pop();
             var num2 = optarr[i + 1];
             i++;
-            var res = num1 / num2;
+            var res = this.divide(num1,num2);
             stack.push(res);
-          } else if (item == this.data.idx) {
+          } else if (item == this.data.idx) {    //乘
             var num1 = stack.pop();
             var num2 = optarr[i+1];
             i++;
-            var res = num1 * num2;
+            var res = this.multiply(num1,num2);
             stack.push(res);
           }else {
             stack.push(item);
@@ -161,23 +273,41 @@ Page({
       this.setData({"screenData":result+""});
     }else{
       if(this.data.operaSymbo[id]){ //如果是符号+-*/
-        if(this.data.lastIsOperaSymbo || this.data.screenData == "0"){
+        if (this.data.lastIsOperaSymbo){
           return;
+        }
+        if (id == this.data.idd) {
+          if (this.data.pointFlage) {
+            return;
+          } else {
+            this.setData({ pointFlage: true }) 
+          }
+        } else{
+          this.setData({ pointFlage: false }) 
+        }
+      }
+      if(this.data.bfhFlage == true && !isNaN(id)){
+        return;
+      }
+      if(id == this.data.bfh){
+        if(this.data.bfhFlage){
+          return;
+        }else{
+          this.setData({bfhFlage:true})
         }
       }
       var sd = this.data.screenData;
       if (this.data.flage && !this.data.operaSymbo[id]) {
         this.setData({"screenData2":sd})
-        sd = 0;
-        // this.setData({ "flage": false });
+        sd = "0";
         this.data.arr.length = 0;
       }
       this.setData({ "flage": false });
       var data;
 
-      if(sd == 0){
+      if (sd == "0" && (!isNaN(id) || this.data.specialSymbo[id])){
         data = id;
-      }else{
+      }else {
         data = sd + id;
       }
       this.setData({"screenData":data});
@@ -218,6 +348,25 @@ Page({
     var res = (a * Math.pow(10, digit) - b * Math.pow(10, digit)) / Math.pow(10, digit);
     console.log(a + "-" + b + " ."  + digit + "= " + res);
 
+    return res;
+  },
+
+  multiply:function(a,b) {
+    var arr1 = String(a).split(".");
+    var arr2 = String(b).split(".");
+    var len1 = arr1.length == 1 ? 0 : arr1[1].length;
+    var len2 = arr2.length == 1 ? 0 : arr2[1].length;
+    var res = ((a*Math.pow(10,len1)) * (b*Math.pow(10,len2))) / Math.pow(10,len1+len2);
+    return res;
+  },
+
+  divide:function(a,b) {
+    var arr1 = String(a).split(".");
+    var arr2 = String(b).split(".");
+    var len1 = arr1.length == 1 ? 0 : arr1[1].length;
+    var len2 = arr2.length == 1 ? 0 : arr2[1].length;
+    var digit = len1 >= len2 ? len1 : len2;
+    var res = (a * Math.pow(10, digit)) / (b * Math.pow(10, digit));
     return res;
   }
 })

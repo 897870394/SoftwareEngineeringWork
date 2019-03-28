@@ -1,5 +1,5 @@
 .content {
-    height: 100%;
+    max-height:100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,66 +8,72 @@
     overflow-x: hidden;
 }
 .layout-top{
-    width: 100%;
-    margin-bottom: 5rpx;
-    height: 15%;
-    
+  width: 100%;
+  margin-bottom: 5rpx;
+  max-height: 35%;
+  border: 1px solid rgb(165, 165, 165);
 }
+
 .layout-bottom{
     width: 100%;
-    height: 85%;
+    max-height: 65%;
+    flex-direction:column;
 }
 .screen {
     text-align: right;
-    width: 100%;
-    line-height: 150rpx;
-    padding: 0 10rpx;
+    padding: 10 rpx;
     font-weight: bold;
-    font-size: 70px;
+    font-size: 60px;
     box-sizing: border-box;
     border-top: 1px solid #fff;
+    max-height: 65%;
 }
 .screen2 {
     text-align: right;
-    width: 100%;
-    line-height:70rpx;
-    padding: 0 10rpx;
-    font-size: 40px;
+
+    /* line-height:70rpx; */
+    padding: 10 10rpx;
+    font-size: 30px;
     font-weight: bold;
     box-sizing: border-box;
     border-top: 2px solid #fff;
+    opacity: 0.5;
+    max-height: 35%;
 }
 .btnGroup {
+    height:3.1rem;
     display: flex;
     flex-direction: row;
     flex: 1;
     width: 100%;
-    height: 4.1rem;
     background-color: #fff;
+ 
 }
 .btnGroup2 {
+    height: 2.7rem;
     display: flex;
     flex-direction: row;
     flex: 1;
     width: 100%;
-    height: 3.8rem;
     background-color: #fff;
 }
 .item {
     width:25%;
     display: flex;
     align-items: center;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
-    margin:4px
+    margin:5px;
+    border-radius:5px;
 }
 .item2 {
     width:20%;
     display: flex;
     align-items: center;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
-    margin: 2px;
+    margin: 4px;
+    border-radius:10px;
 }
 .item:active {
     background-color: #ff0000;
@@ -83,6 +89,11 @@
 .buttonColor{
     color: #fef4e9;
     background: #c5c3c3;
+    font-weight: bold;
+}
+.buttonColor2{
+    color: #fef4e9;
+    background: #f83d3d;
     font-weight: bold;
 }
 .blue {

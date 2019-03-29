@@ -1,4 +1,4 @@
-// pages/fortune/fortune.js
+            // pages/fortune/fortune.js
 Page({
   /**
    * 页面的初始数据

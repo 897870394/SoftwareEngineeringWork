@@ -15,6 +15,6 @@
     border-radius: 3px;
     padding-left: 3rpx;
     color: #fef4e9;
-    border: 1px solid #da7c0c;
-    background: #f78d1d;
+    border: 1px solid #01c2e4;
+    background: #04C1C3;
 }

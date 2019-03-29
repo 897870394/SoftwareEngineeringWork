@@ -31,7 +31,7 @@ Page({
     ide:"＝",
     screenData:"0",
     screenData2:"\xa0",
-    operaSymbo: { "＋": "+", "－": "-", "×": "*", "÷": "/", ".": ".", "!": "!", "^": "^", "^2": "^2"},
+    operaSymbo: { "＋": "+", "－": "-", "×": "*", "÷": "/", ".": ".", "^": "^", "^2": "^2", "!": "!"},
     specialSymbo: { "sin": "sin", "cos": "cos", "tan": "tan", "ln": "ln", "log": "log", "√": "√", "e": "e"},
     lastIsOperaSymbo:false,
     iconType:'waiting_circle',

@@ -75,6 +75,7 @@ Page({
       wx.showModal({
         title: '提示',
         content: '您有选项未填写',
+        showCancel: false,
       })
       return false;
     }
@@ -112,7 +113,7 @@ Page({
     allsum = (12*t + 1) * money * rate / 2 + money;
 
     var first = (money / (t * 12)) + money * rate;
-    var a = Math.abs((2*allsum - 2*12*t*first) / ((12*t)*(12*t-1)));
+    var a = (2*allsum - 2*12*t*first) / ((12*t)*(12*t-1));
     console.log(a);
     this.setData({
       pcInterest: first.toFixed(2),
@@ -133,5 +134,6 @@ Page({
       decrease: 0.00,
       interest: 0.00
     })
-  }
+  },
+
 })

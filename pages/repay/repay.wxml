@@ -36,20 +36,15 @@
             <view class="weui-cell">
                 <view class="weui-cell__hd"><view class="weui-label">贷款金额(万元)</view></view>
                 <view class="weui-cell__bd">
-                    <input class="weui-input" type="number" value="{{loan || ''}}" maxlength="4" bindinput="oninput"  placeholder="请输入贷款金额"/>
+                    <input class="weui-input" type="digit" value="{{loan || ''}}" maxlength="4" bindinput="oninput"  placeholder="请输入贷款金额"/>
                 </view>
             </view>
             
             <view class="weui-cell weui-cell_access">
-                <!-- <view class="weui-cell__bd">
-                    <text>贷款月利率(%)</text>
-                </view>
-                <view class="weui-cell__ft_in-access after">
-                    {{lilv?lilv+'%':''}}
-                </view> -->
+
                 <view class="weui-cell__hd"><view class="weui-label">月利率(‰)</view></view>
                 <view class="weui-cell__bd">
-                    <input class="weui-input" type="number"  maxlength="5" bindinput="onRate"  placeholder="请输入贷款月利率(‰)"/>
+                    <input class="weui-input" type="digit"  maxlength="5" bindinput="onRate"  placeholder="请输入贷款月利率(‰)"/>
                 </view>
             </view>
             <view class="weui-cell weui-cell_access">

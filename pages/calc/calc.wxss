@@ -9,10 +9,10 @@
 }
 .layout-top{
   width: 100%;
-  margin-bottom: 5rpx;
-  border: 1px solid #fff;
+  margin-bottom: 1rpx;
+  border: 2px;
   position:fixed; 
-  bottom:23rem; 
+  bottom:22rem; 
 }
 
 .layout-bottom{
@@ -20,7 +20,7 @@
     max-height: 65%;
     flex-direction:column;
     position:fixed; 
-    bottom:44px; 
+    bottom:42px; 
 }
 .screen {
     text-align: right;
